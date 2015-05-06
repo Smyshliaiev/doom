@@ -4,14 +4,22 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity  {
+
+    private DirectionManager mDirectionManager = new DirectionManager();
+    private TextView mTextInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mTextInfo = (TextView) findViewById(R.id.textView);
+        updateCurrentInfo();
     }
 
 
@@ -35,5 +43,37 @@ public class MainActivity extends ActionBarActivity  {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onClickChoosePic(View view){
+
+    }
+
+    public void onClickMakePhoto(View view){
+
+    }
+
+    public void onClickGoForward(View view){
+        mDirectionManager.moveFrw();
+        updateCurrentInfo();
+    }
+
+    public void onClickTurnLeft(View view){
+        mDirectionManager.turnLeft();
+        updateCurrentInfo();
+    }
+
+    public void onClickTurnRight(View view){
+        mDirectionManager.turnRight();
+        updateCurrentInfo();
+    }
+
+    public void onClickGoBack(View view) {
+        mDirectionManager.moveBack();
+        updateCurrentInfo();
+    }
+
+    private void updateCurrentInfo(){
+        mTextInfo.setText("(" + mDirectionManager.getX()+ ", " + mDirectionManager.getY() + ") " + mDirectionManager.getDir());
     }
 }

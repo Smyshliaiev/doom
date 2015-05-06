@@ -52,7 +52,7 @@
                 android:id="@+id/button_choose_pic"
                 android:layout_alignParentLeft="true"
                 android:textSize="20sp"
-                />
+                android:onClick="onClickChoosePic" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -60,17 +60,19 @@
                 android:text="Make Photo"
                 android:id="@+id/button_make_photo"
                 android:layout_alignParentRight="true"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:onClick="onClickMakePhoto"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NORTH"
-                android:id="@+id/button_north"
+                android:text="FORWARD"
+                android:id="@+id/button_frw"
                 android:layout_toRightOf="@id/button_choose_pic"
                 android:layout_toLeftOf="@id/button_make_photo"
                 android:layout_centerHorizontal="true"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:onClick="onClickGoForward"/>
 
         </RelativeLayout>
 
@@ -83,31 +85,34 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="WEST"
-                android:id="@+id/button_west"
+                android:text="LEFT"
+                android:id="@+id/button_left"
                 android:layout_alignParentLeft="true"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:onClick="onClickTurnLeft"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="EAST"
-                android:id="@+id/button_east"
+                android:text="RIGHT"
+                android:id="@+id/button_right"
                 android:layout_alignParentRight="true"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:onClick="onClickTurnRight"/>
 
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SOUTH"
-                android:id="@+id/button_south"
+                android:text="BACK"
+                android:id="@+id/button_back"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_toRightOf="@id/button_west"
-                android:layout_toLeftOf="@id/button_east"
+                android:layout_toRightOf="@id/button_left"
+                android:layout_toLeftOf="@id/button_right"
                 android:layout_centerHorizontal="true"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:onClick="onClickGoBack"/>
         </RelativeLayout>
     </LinearLayout>
 
