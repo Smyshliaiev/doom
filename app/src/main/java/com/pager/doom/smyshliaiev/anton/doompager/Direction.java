@@ -8,8 +8,4 @@ public enum Direction {
     EAST,
     SOUTH,
     WEST;
-
-    public void moveRight(){
-
-    }
 }
