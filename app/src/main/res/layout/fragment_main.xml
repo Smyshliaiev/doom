@@ -14,7 +14,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:weightSum="10">
+        android:weightSum="10"
+        android:layout_marginBottom="5dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/imageView"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/no_image_available"
             android:layout_weight="9" />
 
     </LinearLayout>
@@ -48,31 +49,39 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Choose Pic"
+                android:text="Gallery"
                 android:id="@+id/button_choose_pic"
                 android:layout_alignParentLeft="true"
                 android:textSize="20sp"
-                android:onClick="onClickChoosePic" />
+                android:onClick="onClickChoosePic"
+                android:background="#aaa"
+                android:layout_marginBottom="5dp" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Make Photo"
+                android:text="Camera"
                 android:id="@+id/button_make_photo"
                 android:layout_alignParentRight="true"
                 android:textSize="20sp"
-                android:onClick="onClickMakePhoto"/>
+                android:onClick="onClickMakePhoto"
+                android:background="#aaa"
+                android:layout_marginBottom="5dp" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FORWARD"
+                android:text="FRW"
                 android:id="@+id/button_frw"
                 android:layout_toRightOf="@id/button_choose_pic"
                 android:layout_toLeftOf="@id/button_make_photo"
                 android:layout_centerHorizontal="true"
                 android:textSize="20sp"
-                android:onClick="onClickGoForward"/>
+                android:onClick="onClickGoForward"
+                android:background="#ccc"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp" />
 
         </RelativeLayout>
 
@@ -89,7 +98,9 @@
                 android:id="@+id/button_left"
                 android:layout_alignParentLeft="true"
                 android:textSize="20sp"
-                android:onClick="onClickTurnLeft"/>
+                android:onClick="onClickTurnLeft"
+                android:background="#ccc"
+                android:layout_marginTop="5dp" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -98,7 +109,9 @@
                 android:id="@+id/button_right"
                 android:layout_alignParentRight="true"
                 android:textSize="20sp"
-                android:onClick="onClickTurnRight"/>
+                android:onClick="onClickTurnRight"
+                android:background="#ccc"
+                android:layout_marginTop="5dp" />
 
 
             <Button
@@ -112,7 +125,9 @@
                 android:layout_toLeftOf="@id/button_right"
                 android:layout_centerHorizontal="true"
                 android:textSize="20sp"
-                android:onClick="onClickGoBack"/>
+                android:onClick="onClickGoBack"
+                android:background="#ccc"
+                android:layout_marginTop="5dp" />
         </RelativeLayout>
     </LinearLayout>
 

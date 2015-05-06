@@ -1,23 +1,28 @@
 package com.pager.doom.smyshliaiev.anton.doompager;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -129,7 +134,12 @@ public class MainActivity extends ActionBarActivity  {
 
     private void updateImageViewFromPath(){
 
-        if(checkIsAppStartedFirstTime()) return;
+        if(checkIsAppStartedFirstTime()) {
+//            Toast toast = Toast.makeText(getApplicationContext(), "Create a photo or choose it from gallery.", Toast.LENGTH_LONG);
+//            toast.setGravity(Gravity.CENTER, 0, 0);
+//            toast.show();
+            return;
+        }
 
         PrefferenceObject prefObject =  new PrefferenceObject();
         prefObject.x = mDirectionManager.getX();
@@ -140,12 +150,20 @@ public class MainActivity extends ActionBarActivity  {
         if(bitmap_path!=null) {
             File file = new File(bitmap_path);
             if (file.exists()) {
-                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                final BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+                options.inSampleSize = 4;
+                options.inJustDecodeBounds = false;
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
                 mImageView.setImageBitmap(bitmap);
             }
         }
         else{
-            mImageView.setImageResource(R.mipmap.ic_launcher);
+//            Toast toast = Toast.makeText(getApplicationContext(), "Create a photo or choose it from gallery.", Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.CENTER, 0, 0);
+//            toast.show();
+            mImageView.setImageResource(R.drawable.no_image_available);
         }
     }
 
@@ -170,7 +188,7 @@ public class MainActivity extends ActionBarActivity  {
                 Uri selectedImageUri = data.getData();
                 mImageView.setImageURI(selectedImageUri);
                 String realPath = getRealPathFromURI(getApplicationContext(), selectedImageUri);
-                System.out.println("selectedImageUri realPath: " + realPath);
+                System.out.println("onActivityResult realPath: " + realPath);
                 addDataToPrefsHashMap(prefObject, realPath);
             }
 
@@ -200,11 +218,17 @@ public class MainActivity extends ActionBarActivity  {
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);
-        } finally {
+        }catch (Exception ex){
+
+        }
+        finally {
             if (cursor != null) {
                 cursor.close();
             }
         }
+
+        File file = new File(contentUri.getPath());
+        return file.getAbsolutePath();
     }
 
     private File createImageFile() throws IOException {
@@ -281,10 +305,9 @@ public class MainActivity extends ActionBarActivity  {
     private void addDataToPrefsHashMap(PrefferenceObject img_info, String path) {
 
         mPreferenceObjectManager.getPrefferenceObjects().put(img_info.hashCode(), path);
+        Log.d(TAG, "img_info.hashCode(): " + img_info.hashCode());
         saveDataToPrefs();
     }
-
-
 
     private PreferenceObjectManager loadDataFromPrefs(){
         mSettings = getPreferences(MODE_PRIVATE);
@@ -294,7 +317,6 @@ public class MainActivity extends ActionBarActivity  {
 
         Type stringStringMap = new TypeToken<Map<Integer, String>>(){}.getType();
         Map<Integer, String> map = gson.fromJson(jsonText, stringStringMap);
-
 
         if(map!=null) {
             mPreferenceObjectManager.setPrefferenceObjects(map);
@@ -306,4 +328,5 @@ public class MainActivity extends ActionBarActivity  {
         if(loadDataFromPrefs().getPrefferenceObjects().size() == 0) return true;
         return false;
     }
+
 }
