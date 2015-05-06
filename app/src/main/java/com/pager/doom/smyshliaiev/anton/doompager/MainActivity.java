@@ -8,10 +8,10 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,15 +22,11 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONObject;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 
@@ -63,35 +59,6 @@ public class MainActivity extends ActionBarActivity  {
     @Override
     protected void onStart() {
         super.onStart();
-
-//        Gson gson = new Gson();
-////        Map<Integer, String> prefferenceObjects = new HashMap<>();
-//
-//        PrefferenceObject pf = new PrefferenceObject();
-//        pf.x = 0;
-//        pf.y = 0;
-//        pf.direction = Direction.NORTH;
-//
-//        mPreferenceObjectManager = new PreferenceObjectManager();
-//        mPreferenceObjectManager.getPrefferenceObjects().put(pf.hashCode(), "path");
-//
-//        //prefferenceObjects.put(pf.hashCode(), "path");
-//        String jsonText = gson.toJson(mPreferenceObjectManager.getPrefferenceObjects());
-//
-//
-//        mSettings = getPreferences(MODE_PRIVATE);
-//        SharedPreferences.Editor ed = mSettings.edit();
-//        System.out.println("saveDataToPrefs json = " + jsonText);
-//        ed.putString(PREFS_DATA, jsonText);
-//        ed.commit();
-//
-//
-//        mSettings = getPreferences(MODE_PRIVATE);
-//        String jsonText2 = mSettings.getString(PREFS_DATA, null);
-//
-//        Type stringStringMap = new TypeToken<Map<Integer, String>>(){}.getType();
-//        Map<Integer, String> prefferenceObjectsGet = gson.fromJson(jsonText2, stringStringMap);
-
 
         loadDataFromPrefs();
         updateCurrentInfo();
@@ -215,12 +182,11 @@ public class MainActivity extends ActionBarActivity  {
 
                     Log.d(TAG, "onActivityResult file: " + file.getAbsolutePath());
                     galleryAddPic();
+                    Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                    mImageView.setImageBitmap(myBitmap);
                 }
                 addDataToPrefsHashMap(prefObject, mCurrentPhotoPath);
             }
-
-            //mPreferenceObjectManager.getPrefferenceObjects().put(prefObject, mCurrentPhotoPath);
-
         }
 
 
@@ -255,7 +221,6 @@ public class MainActivity extends ActionBarActivity  {
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        //mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         mCurrentPhotoPath = image.getAbsolutePath();
 
         Log.d(TAG, "end createImageFile with mCurrentPhotoPath: " + mCurrentPhotoPath);
@@ -297,17 +262,6 @@ public class MainActivity extends ActionBarActivity  {
     }
 
 
-//    private void getPreferences(){
-//
-//        mSettings = getApplicationContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-//        String jsonData = mSettings.getString(PREFS_DATA, null);
-//        Gson gson = new Gson();
-//        PreferenceObjectManager data = gson.fromJson(jsonData, PreferenceObjectManager.class);
-//        //mPreferenceObjectManager = new PreferenceObjectManager(data.getPrefferenceObjects());
-//
-//    }
-
-
     private void saveDataToPrefs(){
 
         if(mPreferenceObjectManager.getPrefferenceObjects().size()==0){
@@ -315,11 +269,6 @@ public class MainActivity extends ActionBarActivity  {
         }
 
         Gson gson = new Gson();
-//        mPreferenceObjectManager = loadDataFromPrefs();
-//        if (mPreferenceObjectManager == null) {
-//            mPreferenceObjectManager = new PreferenceObjectManager();
-//        }
-
 
         mSettings = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed = mSettings.edit();
@@ -329,21 +278,12 @@ public class MainActivity extends ActionBarActivity  {
         ed.commit();
     }
 
-    private void addDataToPrefsHashMap(PrefferenceObject img_info, String path){
+    private void addDataToPrefsHashMap(PrefferenceObject img_info, String path) {
 
-//        Gson gson = new Gson();
-//        mPreferenceObjectManager = loadDataFromPrefs();
-//        if (mPreferenceObjectManager == null) {
-//            mPreferenceObjectManager = new PreferenceObjectManager();
-//        }
-//        mSettings = getPreferences(MODE_PRIVATE);
-  //      SharedPreferences.Editor ed = mSettings.edit();
         mPreferenceObjectManager.getPrefferenceObjects().put(img_info.hashCode(), path);
         saveDataToPrefs();
-//        String jsonText = gson.toJson(mPreferenceObjectManager);
-//        ed.putString(PREFS_DATA, jsonText);
-//        ed.commit();
     }
+
 
 
     private PreferenceObjectManager loadDataFromPrefs(){
@@ -355,9 +295,7 @@ public class MainActivity extends ActionBarActivity  {
         Type stringStringMap = new TypeToken<Map<Integer, String>>(){}.getType();
         Map<Integer, String> map = gson.fromJson(jsonText, stringStringMap);
 
-//        if(mPreferenceObjectManager == null) {
-//            mPreferenceObjectManager = new PreferenceObjectManager();
-//        }
+
         if(map!=null) {
             mPreferenceObjectManager.setPrefferenceObjects(map);
         }

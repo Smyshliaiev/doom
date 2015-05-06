@@ -12,6 +12,16 @@ public abstract class Coordinates {
     public abstract void goForward();
     public abstract void goBackward();
 
+    public boolean canInc(int num){
+        if(num >= 5)return false;
+        return true;
+    }
+    public boolean canDec(int num){
+        if(num <= -5)return false;
+        return true;
+    }
+
+
     public int getX() {
         return x;
     }

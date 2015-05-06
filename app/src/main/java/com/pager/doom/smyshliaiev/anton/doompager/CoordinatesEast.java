@@ -5,10 +5,12 @@ package com.pager.doom.smyshliaiev.anton.doompager;
  */
 public class CoordinatesEast extends Coordinates {
     public void goForward(){
-        x++;
+        if(canInc(x))
+            x++;
     }
     public void goBackward(){
-        x--;
+        if(canDec(x))
+            x--;
     }
 
 }
